@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: planets
+  name: planets-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: planets
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: planets
+    spec:
+      containers:
+      - image: anthonydelarosa/planets:035a6bbc518e6f95d172b9f7ec04d2e879ce2a81
+        imagePullPolicy: Always
+        name: planets
+        ports:
+        - containerPort: 3000
+          name: http
+          protocol: TCP
+        envFrom:
+        - secretRef:
+            name: mongo-db-creds
